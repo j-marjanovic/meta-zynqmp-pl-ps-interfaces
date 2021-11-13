@@ -1,0 +1,50 @@
+From 2fc4e06eee18f7e99150579ed7c38b293d0ea21c Mon Sep 17 00:00:00 2001
+From: Jan Marjanovic <jan.marjanovic@outlook.com>
+Date: Wed, 7 Jul 2021 20:59:12 +0200
+Subject: [PATCH 2/2] Enable CCI snoop on APU port (port S3 on CCI400)
+
+---
+ lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+index b0030a1d67..d9c8cf5c87 100644
+--- a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
++++ b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+@@ -96,6 +96,25 @@ static void cci_reg_debug_enable(void) {
+ 			CCI_MISC_CTRL_NIDEN_MASK | CCI_MISC_CTRL_SPIDEN_MASK);
+ }
+ 
++static void cci_enable_apu_snoop(void) {
++	const uint64_t OFFS_CCI_SNOOP_CTRL_REG_S3 = 0x00004000;
++
++	const uint32_t CCI_SNOOP_CONTROL_EN_SNOOP_MASK = 0x1;
++
++	uint32_t snoop_ctrl = XFsbl_In32(XPAR_PSU_CCI_GPV_S_AXI_BASEADDR +
++			OFFS_CCI_SNOOP_CTRL_REG_S3);
++	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "CCI: enable snoop, ctrl before = %x\r\n",
++			snoop_ctrl);
++
++	XFsbl_Out32(XPAR_PSU_CCI_GPV_S_AXI_BASEADDR + OFFS_CCI_SNOOP_CTRL_REG_S3,
++			CCI_SNOOP_CONTROL_EN_SNOOP_MASK);
++
++	snoop_ctrl = XFsbl_In32(XPAR_PSU_CCI_GPV_S_AXI_BASEADDR +
++			OFFS_CCI_SNOOP_CTRL_REG_S3);
++	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "CCI: enable snoop, ctrl after = %x\r\n",
++			snoop_ctrl);
++}
++
+ u32 XFsbl_HookBeforeHandoff(u32 EarlyHandoff)
+ {
+ 	u32 Status = XFSBL_SUCCESS;
+@@ -104,6 +123,7 @@ u32 XFsbl_HookBeforeHandoff(u32 EarlyHandoff)
+ 	cci_reg_dump();
+ 	cci_reg_debug_enable();
+ 	cci_reg_dump();
++	cci_enable_apu_snoop();
+ 
+ 	return Status;
+ }
+-- 
+2.25.1
+

@@ -1,0 +1,50 @@
+From e9c7f27265409d0f44e97f2c5e0db5e33b11ee9d Mon Sep 17 00:00:00 2001
+From: Jan Marjanovic <jan.marjanovic@outlook.com>
+Date: Thu, 8 Jul 2021 21:21:11 +0200
+Subject: [PATCH 3/3] Enable sharing on the HPC port (port S0 on CCI400)
+
+---
+ lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+index d9c8cf5c87..6aaeba3145 100644
+--- a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
++++ b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+@@ -115,6 +115,25 @@ static void cci_enable_apu_snoop(void) {
+ 			snoop_ctrl);
+ }
+ 
++static void cci_enable_hpc_coherence(void) {
++	const uint64_t OFFS_CCI_SHAREABLE_OVERRIDE_REG_S0 = 0x00001004;
++
++	const uint32_t CCI_SHAREABLE_OVERRIDE_MASK = 0x3;
++
++	uint32_t sh_override = XFsbl_In32(XPAR_PSU_CCI_GPV_S_AXI_BASEADDR +
++			OFFS_CCI_SHAREABLE_OVERRIDE_REG_S0);
++	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "CCI: shareable override reg - before = %x\r\n",
++			sh_override);
++
++	XFsbl_Out32(XPAR_PSU_CCI_GPV_S_AXI_BASEADDR + OFFS_CCI_SHAREABLE_OVERRIDE_REG_S0,
++			CCI_SHAREABLE_OVERRIDE_MASK);
++
++	sh_override = XFsbl_In32(XPAR_PSU_CCI_GPV_S_AXI_BASEADDR +
++			OFFS_CCI_SHAREABLE_OVERRIDE_REG_S0);
++	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "CCI: shareable override reg - after = %x\r\n",
++			sh_override);
++}
++
+ u32 XFsbl_HookBeforeHandoff(u32 EarlyHandoff)
+ {
+ 	u32 Status = XFSBL_SUCCESS;
+@@ -124,6 +143,7 @@ u32 XFsbl_HookBeforeHandoff(u32 EarlyHandoff)
+ 	cci_reg_debug_enable();
+ 	cci_reg_dump();
+ 	cci_enable_apu_snoop();
++	cci_enable_hpc_coherence();
+ 
+ 	return Status;
+ }
+-- 
+2.25.1
+

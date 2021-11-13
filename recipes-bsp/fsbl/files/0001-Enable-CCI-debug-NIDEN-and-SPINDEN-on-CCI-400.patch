@@ -1,0 +1,66 @@
+From 08450fd4c18d11fedf196c65c22f8abf83a6cc2a Mon Sep 17 00:00:00 2001
+From: Jan Marjanovic <jan.marjanovic@outlook.com>
+Date: Thu, 10 Jun 2021 19:20:25 +0200
+Subject: [PATCH] Enable CCI debug (NIDEN and SPINDEN on CCI-400)
+
+---
+ lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c | 39 +++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 3 deletions(-)
+
+diff --git a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+index 80a1314203..b0030a1d67 100644
+--- a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
++++ b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+@@ -64,13 +64,46 @@ u32 XFsbl_HookAfterBSDownload(void )
+ }
+ #endif
+ 
++static void print_el(void) {
++	register uint64_t x0 __asm__ ("x0");
++	__asm__ ("mrs x0, CurrentEL;" : : : "%x0");
++	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "EL = %x\r\n", x0 >> 2);
++}
++
++static void cci_reg_dump(void) {
++	// offsets from UG1087
++	uint64_t offsets[] = {0, 0x10, 0x14, 0x18, 0x1c, 0x40};
++
++	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "CCI_REG: register dump\r\n");
++
++	for (int i = 0; i < sizeof(offsets)/sizeof(*offsets); i++) {
++		uint64_t offs = offsets[i];
++		u32 val = XFsbl_In32(XPAR_PSU_CCI_REG_S_AXI_BASEADDR + offs);
++		XFsbl_Printf(DEBUG_PRINT_ALWAYS, "  offset %x = %x\r\n",
++				offs, val);
++	}
++}
++
++static void cci_reg_debug_enable(void) {
++	const uint64_t OFFS_CCI_MISC_CTRL = 0x40;
++
++	const uint32_t CCI_MISC_CTRL_NIDEN_MASK = 0x2;
++	const uint32_t CCI_MISC_CTRL_SPIDEN_MASK = 0x1;
++
++	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "CCI_REG: debug enable\r\n");
++
++	XFsbl_Out32(XPAR_PSU_CCI_REG_S_AXI_BASEADDR + OFFS_CCI_MISC_CTRL,
++			CCI_MISC_CTRL_NIDEN_MASK | CCI_MISC_CTRL_SPIDEN_MASK);
++}
++
+ u32 XFsbl_HookBeforeHandoff(u32 EarlyHandoff)
+ {
+ 	u32 Status = XFSBL_SUCCESS;
+ 
+-	/**
+-	 * Add the code here
+-	 */
++	print_el();
++	cci_reg_dump();
++	cci_reg_debug_enable();
++	cci_reg_dump();
+ 
+ 	return Status;
+ }
+-- 
+2.25.1
+
