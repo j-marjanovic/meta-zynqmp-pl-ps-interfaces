@@ -1,0 +1,24 @@
+From a59f7cbebd1162c9eb089bc7d8a9758015f39ed0 Mon Sep 17 00:00:00 2001
+From: Jan Marjanovic <jan.marjanovic@outlook.com>
+Date: Sat, 13 Nov 2021 19:06:02 +0100
+Subject: [PATCH] Add a missing include (for `iounmap`)
+
+---
+ zynqMP/src/driver/xvc_driver.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/xvc_driver.c b/xvc_driver.c
+index 61b32ef..bf753b4 100644
+--- a/xvc_driver.c
++++ b/xvc_driver.c
+@@ -26,6 +26,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/list.h>
+ #include <linux/uaccess.h>
++#include <asm/io.h>
+ #include <asm-generic/io.h>
+ 
+ #include "xvc_driver.h"
+-- 
+2.25.1
+
