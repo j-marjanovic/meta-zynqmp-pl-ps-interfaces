@@ -27,6 +27,7 @@ bitbake-layers add-layer ../sources/meta-zynqmp-pl-ps-interfaces
 
 echo 'MACHINE = "u96v2-sbc"' >> conf/local.conf
 echo 'EXTRA_IMAGE_FEATURES += " fpga-manager"' >> conf/local.conf
+echo 'MACHINE_FEATURES_append = " fpga-overlay"' >> conf/local.conf
 
 # TODO: rename the image
 bitbake avnet-image-minimal
