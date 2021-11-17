@@ -1,0 +1,33 @@
+
+&debug_bridge_0 {
+    compatible = "xlnx,xvc";
+};
+
+&overlay2 {
+    udmabuf0: udmabuf@0x0 {
+        compatible = "ikwzm,u-dma-buf";
+        size = <0x2000000>;
+        dma-coherent;
+    };
+};
+
+&LamportsBakeryAlgo_0 {
+    compatible = "generic-uio";
+    jan-note = "LamportsBakeryAlgo_0";
+};
+
+&LamportsBakeryAlgo_1 {
+    compatible = "generic-uio";
+    jan-note = "LamportsBakeryAlgo_1";
+};
+
+&axi_gpio_0 {
+    compatible = "generic-uio";
+    jan-note = "axi_gpio_0";
+};
+
+&axi_gpio_1 {
+    compatible = "generic-uio";
+    jan-note = "axi_gpio_1";
+};
+
