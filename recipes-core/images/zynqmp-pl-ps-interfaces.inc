@@ -12,6 +12,7 @@ TOOLCHAIN_TARGET_TASK_append = " kernel-devsrc"
 IMAGE_INSTALL_append = "\
     fpga-manager-util \
     xilinx-xvc-driver \
+    xilinx-xvc-server \
     bash \
 "
 
