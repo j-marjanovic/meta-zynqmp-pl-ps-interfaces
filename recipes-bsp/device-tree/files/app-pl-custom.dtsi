@@ -21,13 +21,3 @@
     jan-note = "LamportsBakeryAlgo_1";
 };
 
-&axi_gpio_0 {
-    compatible = "generic-uio";
-    jan-note = "axi_gpio_0";
-};
-
-&axi_gpio_1 {
-    compatible = "generic-uio";
-    jan-note = "axi_gpio_1";
-};
-
