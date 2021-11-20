@@ -13,6 +13,7 @@ IMAGE_INSTALL_append = "\
     fpga-manager-util \
     xilinx-xvc-driver \
     xilinx-xvc-server \
+    u-dma-buf \
     bash \
     app-lamports-bakery-algo \
 "
