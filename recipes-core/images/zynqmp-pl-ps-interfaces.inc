@@ -14,5 +14,6 @@ IMAGE_INSTALL_append = "\
     xilinx-xvc-driver \
     xilinx-xvc-server \
     bash \
+    app-lamports-bakery-algo \
 "
 

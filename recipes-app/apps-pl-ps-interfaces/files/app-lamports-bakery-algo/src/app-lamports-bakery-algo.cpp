@@ -1,6 +1,6 @@
 
 // Copyright (c) 2021 Jan Marjanovic
-
+// Released under the MIT license (see COPYING.MIT for the terms)
 
 #include <algorithm>
 #include <chrono>
