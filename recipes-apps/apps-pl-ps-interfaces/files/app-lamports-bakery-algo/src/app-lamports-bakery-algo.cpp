@@ -46,9 +46,8 @@ int main() {
   uint32_t idx = 0;
   for (auto &axi_lamp_ba : axi_lamp_bas) {
     axi_lamp_ba.config_addr(udmabuf.get_phys_addr(), idx++, axi_lamp_bas.size());
+    axi_lamp_ba.config_axi(0, 0, 0); // 0xF, 0x2, 0x1);
   }
-
-  // TODO: configure AXI
 
   for (auto &axi_lamp_ba : axi_lamp_bas) {
     axi_lamp_ba.start();
@@ -79,7 +78,7 @@ int main() {
   }
 
   void* buf = udmabuf.get_buf();
-  uint32_t data = *static_cast<uint32_t*>(buf + 0x8);
-  std::cout << "Data (from SW) = " << data << "\n";
+  uint32_t* buf_ptr = static_cast<uint32_t*>(buf);
+  std::cout << "Data (from SW) = " << buf_ptr[0x100 / 4] << "\n";
 
 }
