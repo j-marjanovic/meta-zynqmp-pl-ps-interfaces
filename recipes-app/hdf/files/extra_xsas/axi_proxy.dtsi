@@ -1,0 +1,28 @@
+
+&AxiProxy_ACP {
+    compatible = "generic-uio";
+    jan-note = "acp";
+};
+
+&AxiProxy_HP {
+    compatible = "generic-uio";
+    jan-note = "hp";
+};
+
+&AxiProxy_HPC {
+    compatible = "generic-uio";
+    jan-note = "hpc";
+};
+
+&debug_bridge_0 {
+    compatible = "xlnx,xvc";
+};
+
+&overlay2 {
+    udmabuf0: udmabuf@0x0 {
+        compatible = "ikwzm,u-dma-buf";
+        size = <0x2000000>;
+        dma-coherent;
+    };
+};
+
