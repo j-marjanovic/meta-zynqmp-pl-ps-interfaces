@@ -1,7 +1,6 @@
 
 // Copyright (c) 2021 Jan Marjanovic
 
-
 #pragma once
 
 #include <iostream>
@@ -63,9 +62,7 @@ public:
               << regs()->version.minor << "." << regs()->version.patch << "\n";
   }
 
-  void config_prbs(uint32_t seed) {
-    regs()->config_dly_prbs_init = seed;
-  }
+  void config_prbs(uint32_t seed) { regs()->config_dly_prbs_init = seed; }
 
   void config_addr(uint64_t base, uint32_t idx_inst, uint32_t nr_insts) {
     regs()->addr_counter = base | 0x100;

@@ -1,7 +1,6 @@
 
 // Copyright (c) 2021 Jan Marjanovic
 
-
 #pragma once
 
 #include <cassert>
@@ -60,7 +59,7 @@ public:
   }
 
   ~UioInterface() {
-    munmap(const_cast<void*>(_mem), _mem_length);
+    munmap(const_cast<void *>(_mem), _mem_length);
     close(_fd);
   }
 
@@ -74,7 +73,5 @@ public:
     *(static_cast<volatile uint32_t *>(_mem) + offs / 4) = data;
   }
 
-  uint64_t get_addr() {
-    return _addr;
-  }
+  uint64_t get_addr() { return _addr; }
 };

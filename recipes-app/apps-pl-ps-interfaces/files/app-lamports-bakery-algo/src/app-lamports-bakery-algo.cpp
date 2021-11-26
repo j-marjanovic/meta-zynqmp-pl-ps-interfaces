@@ -6,24 +6,24 @@
 #include <chrono>
 #include <iostream>
 #include <list>
-#include <variant>
 #include <thread>
+#include <variant>
 
+#include "Udmabuf.hpp"
 #include "UioDevice.hpp"
 #include "UioUtilities.hpp"
-#include "Udmabuf.hpp"
 
 #include "AxiLamportsBakeryAlgo.hpp"
-
 
 int main() {
 
   Udmabuf udmabuf{"axi:udmabuf@0x0"};
 
   static std::vector<UioDevice> uios = UioUtilities::get_all_uios();
-  std::sort(std::begin(uios),
-            std::end(uios),
-            [](const UioDevice &a, const UioDevice &b) -> bool { return a.addr < b.addr; });
+  std::sort(std::begin(uios), std::end(uios),
+            [](const UioDevice &a, const UioDevice &b) -> bool {
+              return a.addr < b.addr;
+            });
 
   std::vector<AxiLamportsBakeryAlgo> axi_lamp_bas;
 
@@ -45,7 +45,8 @@ int main() {
 
   uint32_t idx = 0;
   for (auto &axi_lamp_ba : axi_lamp_bas) {
-    axi_lamp_ba.config_addr(udmabuf.get_phys_addr(), idx++, axi_lamp_bas.size());
+    axi_lamp_ba.config_addr(udmabuf.get_phys_addr(), idx++,
+                            axi_lamp_bas.size());
     axi_lamp_ba.config_axi(0, 0, 0); // 0xF, 0x2, 0x1);
   }
 
@@ -77,8 +78,7 @@ int main() {
     std::cout << "\n";
   }
 
-  void* buf = udmabuf.get_buf();
-  uint32_t* buf_ptr = static_cast<uint32_t*>(buf);
+  void *buf = udmabuf.get_buf();
+  uint32_t *buf_ptr = static_cast<uint32_t *>(buf);
   std::cout << "Data (from SW) = " << buf_ptr[0x100 / 4] << "\n";
-
 }

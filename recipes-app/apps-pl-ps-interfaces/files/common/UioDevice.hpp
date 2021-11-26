@@ -1,7 +1,6 @@
 
 // Copyright (c) 2021 Jan Marjanovic
 
-
 #pragma once
 
 #include <iomanip>

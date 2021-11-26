@@ -1,13 +1,12 @@
 
 // Copyright (c) 2021 Jan Marjanovic
 
-
 #pragma once
 
 #include <filesystem>
+#include <fstream>
 #include <string>
 #include <vector>
-#include <fstream>
 
 #include "UioDevice.hpp"
 
@@ -21,7 +20,8 @@ struct UioUtilities {
     std::vector<UioDevice> tmp;
     for (const fs::directory_entry &p : fs::directory_iterator(UIO_SYSFS_DIR)) {
       tmp.push_back(UioDevice{get_uio_number(p.path()), get_uio_name(p.path()),
-                              get_uio_address(p.path()), get_uio_size(p.path())});
+                              get_uio_address(p.path()),
+                              get_uio_size(p.path())});
     }
 
     return tmp;
