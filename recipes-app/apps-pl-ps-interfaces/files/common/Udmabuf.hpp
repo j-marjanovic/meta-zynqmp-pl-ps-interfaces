@@ -20,8 +20,8 @@ class Udmabuf {
   size_t _phys_addr;
 
 public:
-  explicit Udmabuf(const std::string &udmabuf_name) {
-    constexpr int flags = O_RDWR | O_SYNC;
+  explicit Udmabuf(const std::string &udmabuf_name, uint32_t flags = 0) {
+    flags |= O_RDWR;
     std::string udmabuf_filename{"/dev/" + udmabuf_name};
     int fd = open(udmabuf_filename.c_str(), flags);
     if (fd < 0) {
@@ -42,6 +42,7 @@ public:
     std::cout << "  phys addr = 0x" << std::hex << _phys_addr << std::dec
               << "\n";
     std::cout << "  size = " << _size << "\n";
+    std::cout << "  flags = 0x" << std::hex << flags << std::dec << "\n";
   }
 
   size_t get_phys_addr() { return _phys_addr; }

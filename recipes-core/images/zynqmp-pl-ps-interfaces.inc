@@ -18,5 +18,6 @@ IMAGE_INSTALL_append = "\
     u-dma-buf \
     bash \
     app-lamports-bakery-algo \
+    app-axi-traffic-gen \
 "
 

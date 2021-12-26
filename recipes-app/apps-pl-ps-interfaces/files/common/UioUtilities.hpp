@@ -20,8 +20,8 @@ struct UioUtilities {
     std::vector<UioDevice> tmp;
     for (const fs::directory_entry &p : fs::directory_iterator(UIO_SYSFS_DIR)) {
       tmp.push_back(UioDevice{get_uio_number(p.path()), get_uio_name(p.path()),
-                              get_uio_address(p.path()),
-                              get_uio_size(p.path())});
+                              get_uio_address(p.path()), get_uio_size(p.path()),
+                              get_uio_note(p.path())});
     }
 
     return tmp;
@@ -71,5 +71,20 @@ struct UioUtilities {
     std::getline(ifs, addr_str);
 
     return std::stoll(addr_str, 0, 0);
+  }
+
+  static std::string get_uio_note(const fs::path &path) {
+    fs::path path_addr = path / "device/of_node/jan-note";
+    std::ifstream ifs{path_addr};
+    if (!ifs.good()) {
+      return "";
+    }
+
+    std::string tmp;
+    std::getline(ifs, tmp);
+
+    tmp.erase(std::find(tmp.begin(), tmp.end(), '\0'), tmp.end());
+
+    return tmp;
   }
 };

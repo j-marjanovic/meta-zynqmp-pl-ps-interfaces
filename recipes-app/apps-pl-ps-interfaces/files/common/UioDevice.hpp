@@ -11,11 +11,13 @@ struct UioDevice {
   std::string name;
   size_t addr;
   size_t size;
+  std::string note;
 };
 
 std::ostream &operator<<(std::ostream &os, const UioDevice &dev) {
   os << "UioDevice{number = " << std::setw(2) << dev.number
      << ", name = " << std::setw(20) << dev.name << ", addr = 0x" << std::hex
-     << dev.addr << std::dec << ", size = " << dev.size << "}";
+     << dev.addr << std::dec << ", size = " << dev.size
+     << ", note = " << dev.note << "}";
   return os;
 }
