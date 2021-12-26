@@ -6,6 +6,8 @@ IMAGE_INSTALL_remove_u96v2-sbc = "\
     packagegroup-petalinux-openamp \
 "
 
+IMAGE_FSTYPES_remove = "jffs2 cpio cpio.gz"
+
 EXTRA_IMAGE_FEATURES = "debug-tweaks tools-profile"
 TOOLCHAIN_TARGET_TASK_append = " kernel-devsrc"
 
