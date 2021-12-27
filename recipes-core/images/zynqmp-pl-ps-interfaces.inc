@@ -4,6 +4,7 @@ IMAGE_INSTALL_remove_u96v2-sbc = "\
     openamp-fw-mat-muld \
     openamp-fw-rpc-demo \
     packagegroup-petalinux-openamp \
+    packagegroup-petalinux-ultra96-webapp \
 "
 
 IMAGE_FSTYPES_remove = "jffs2 cpio cpio.gz"
@@ -19,5 +20,7 @@ IMAGE_INSTALL_append = "\
     bash \
     app-lamports-bakery-algo \
     app-axi-traffic-gen \
+    python3-jupyter \
+    start-jupyter \
 "
 
