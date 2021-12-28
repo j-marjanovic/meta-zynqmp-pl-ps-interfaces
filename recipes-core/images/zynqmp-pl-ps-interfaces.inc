@@ -29,5 +29,6 @@ IMAGE_INSTALL_append = "\
     python3-matplotlib \
     python3-pillow \
     jupyter-numpy-acc \
+    jupyter-zynqmp-pl-ps \
 "
 
