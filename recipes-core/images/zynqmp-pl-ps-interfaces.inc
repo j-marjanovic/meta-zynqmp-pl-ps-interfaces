@@ -25,5 +25,8 @@ IMAGE_INSTALL_append = "\
     python3-jupyter \
     start-jupyternb \
     python3-fpga-mngr-interface \
+    python3-numpy \
+    python3-matplotlib \
+    python3-pillow \
 "
 
