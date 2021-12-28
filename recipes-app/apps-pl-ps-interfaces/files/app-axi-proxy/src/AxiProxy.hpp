@@ -84,6 +84,6 @@ public:
     data[2] = regs()->DATA_RD2.DATA;
     data[3] = regs()->DATA_RD3.DATA;
 
-    return regs()->STATS.CNTR_WR;
+    return regs()->STATS.CNTR_RD;
   }
 };

@@ -54,8 +54,8 @@ int main(int argc, char *argv[]) {
         "Zynq interface (\"hp\", \"hpc\", \"acp\")")
     ("data",
         po::value<std::vector<uint32_t>>(&data)
-	  ->multitoken()
-	  ->default_value(DATA_DEFAULT_VAL),
+          ->multitoken()
+          ->default_value(DATA_DEFAULT_VAL),
         "data to write (and read) over the proxy")
     ("use-osync",
         po::bool_switch(&use_osync),
@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
   uint64_t phys_addr = udmabuf.get_phys_addr();
   std::array<uint32_t, DATA_LEN> arr;
   std::copy_n(data.begin(), DATA_LEN, arr.begin());
-  axi_proxy.write(phys_addr, arr);
+  uint32_t dur_wr = axi_proxy.write(phys_addr, arr);
 
   std::cout << "SW read, HW written:\n";
   for (int i = 0; i < DATA_LEN; i++) {
@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
   }
 
   std::array<uint32_t, DATA_LEN> readback;
-  axi_proxy.read(phys_addr, readback);
+  uint32_t dur_rd = axi_proxy.read(phys_addr, readback);
 
   std::cout << "readback, expected:\n";
   for (int i = 0; i < DATA_LEN; i++) {
@@ -138,4 +138,6 @@ int main(int argc, char *argv[]) {
       throw std::runtime_error("Readback value does not match");
     }
   }
+
+  std::cout << "stats: dur_wr = " << dur_wr << ", dur_rd = " << dur_rd << "\n";
 }
