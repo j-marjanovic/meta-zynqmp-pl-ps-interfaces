@@ -28,5 +28,6 @@ IMAGE_INSTALL_append = "\
     python3-numpy \
     python3-matplotlib \
     python3-pillow \
+    jupyter-numpy-acc \
 "
 
