@@ -21,6 +21,6 @@ IMAGE_INSTALL_append = "\
     app-lamports-bakery-algo \
     app-axi-traffic-gen \
     python3-jupyter \
-    start-jupyter \
+    start-jupyternb \
 "
 
