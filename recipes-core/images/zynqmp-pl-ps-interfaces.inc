@@ -24,5 +24,6 @@ IMAGE_INSTALL_append = "\
     app-axi-proxy \
     python3-jupyter \
     start-jupyternb \
+    python3-fpga-mngr-interface \
 "
 
