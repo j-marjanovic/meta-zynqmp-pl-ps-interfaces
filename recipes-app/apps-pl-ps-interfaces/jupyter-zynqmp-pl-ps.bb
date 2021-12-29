@@ -11,6 +11,8 @@ SRC_URI = "\
     file://notebooks/00-traffic-gen.ipynb \
     file://notebooks/01-axi-proxy.ipynb \
     file://notebooks/02-axi-proxy-on-repeat.ipynb \
+    file://notebooks/vivado_axi_proxy.png \
+    file://notebooks/vivado_axi_tg.png \
     file://notebooks/LICENSE \
 "
 
@@ -24,6 +26,8 @@ do_install() {
     install -m 0644 ${S}/00-traffic-gen.ipynb ${D}/usr/share/notebooks/zynqmp-pl-ps
     install -m 0644 ${S}/01-axi-proxy.ipynb ${D}/usr/share/notebooks/zynqmp-pl-ps
     install -m 0644 ${S}/02-axi-proxy-on-repeat.ipynb ${D}/usr/share/notebooks/zynqmp-pl-ps
+    install -m 0444 ${S}/vivado_axi_proxy.png ${D}/usr/share/notebooks/zynqmp-pl-ps
+    install -m 0444 ${S}/vivado_axi_tg.png ${D}/usr/share/notebooks/zynqmp-pl-ps
 }
 
 FILES_${PN} = "/usr/share/notebooks/zynqmp-pl-ps"
