@@ -2,7 +2,7 @@ DESCRIPTION = "Jupyter notebook for Zynq MP PL/PS interfaces"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=bd67c54ff052244b70a29a4f4591a6ea"
 
-PV = "1.0"
+PV = "1.1"
 PR = "r0"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
