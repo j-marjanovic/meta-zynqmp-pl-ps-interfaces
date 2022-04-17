@@ -5,6 +5,7 @@ IMAGE_INSTALL_remove_u96v2-sbc = "\
     openamp-fw-rpc-demo \
     packagegroup-petalinux-openamp \
     packagegroup-petalinux-ultra96-webapp \
+    packagegroup-petalinux-96boards-sensors \
     ultra96-radio-leds \
 "
 
