@@ -35,6 +35,17 @@ bitbake avnet-image-minimal
 bitbake xilinx-bootbin
 ```
 
+#### systemd
+
+Add the following to the `conf/local.conf` if you want to use systemd as an init process.
+
+```
+DISTRO_FEATURES_append = " systemd"
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
+VIRTUAL-RUNTIME_init_manager = "systemd"
+VIRTUAL-RUNTIME_initscripts = "systemd-compat-units"
+```
+
 ### Deployement
 
 `<DEPLOY_DIR>` is `<TOP_DIR>/build/tmp/deploy/images/u96v2-sbc/`
